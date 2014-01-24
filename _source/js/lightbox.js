@@ -20,7 +20,7 @@
     // Configuration
     //
     options = {
-      loadingImage: 'js/lightbox/loading.gif',
+      loadingImage: '/img/lightbox/loading.gif',
       closeButton: '', //'close.gif';
       namespace: 'lightbox'
     };
