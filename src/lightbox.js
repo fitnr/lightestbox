@@ -286,6 +286,7 @@
     // create overlay div and hardcode some functional styles (aesthetic styles are in CSS file)
     var objOverlay = document.createElement("div");
     objOverlay.setAttribute('id', options.namespace+'Overlay');
+    objOverlay.className = options.namespace + '-overlay';
     objOverlay.onclick = function() {
       hideLightbox();
       return false;
@@ -337,6 +338,7 @@
     // create lightbox div, same note about styles as above
     var objLightbox = document.createElement("div");
     objLightbox.setAttribute('id', options.namespace);
+    objLightbox.className = options.namespace;
     objLightbox.style.display = 'none';
     objLightbox.style.position = 'absolute';
     objLightbox.style.zIndex = '100';
@@ -362,6 +364,7 @@
 
       var objCloseButton = document.createElement("img");
       objCloseButton.src = options.closeButton;
+      objCloseButton.className = options.namespace + '-closebutton';
       objCloseButton.setAttribute('id', 'closeButton');
       objCloseButton.style.position = 'absolute';
       objCloseButton.style.zIndex = '200';
@@ -375,6 +378,7 @@
     // create image
     var objImage = document.createElement("img");
     objImage.setAttribute('id', options.namespace+'Image');
+    objImage.className = options.namespace + '-image';
     objLink.appendChild(objImage);
 
     options.objImage = objImage;
@@ -382,6 +386,7 @@
     // create details div, a container for the caption and keyboard message
     var objLightboxDetails = document.createElement("div");
     objLightboxDetails.setAttribute('id', options.namespace+'Details');
+    objLightboxDetails.className = options.namespace + '-details';
     objLightbox.appendChild(objLightboxDetails);
 
     options.objLightboxDetails = objLightboxDetails;
@@ -389,6 +394,7 @@
     // create caption
     var objCaption = document.createElement("span");
     objCaption.setAttribute("id", options.namespace+'Caption');
+    objCaption.className = options.namespace + '-caption';
     objCaption.style.display = 'none';
     objLightboxDetails.appendChild(objCaption);
 
@@ -397,6 +403,7 @@
     // create keyboard message
     //var objKeyboardMsg = document.createElement("div");
     //objKeyboardMsg.setAttribute('id','keyboardMsg');
+    //objKeyboardMsg.className = options.namespace + '-keyboardmsg';
     //objKeyboardMsg.innerHTML = 'press <a href="#" onclick="hideLightbox(); return false;"><kbd>x</kbd></a> to close';
     //objLightboxDetails.appendChild(objKeyboardMsg);
 

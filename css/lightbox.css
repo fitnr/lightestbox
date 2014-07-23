@@ -1,0 +1,28 @@
+.lightbox {
+  background-color: #fff;
+  padding: 0 0 12px 0;
+}
+.lightbox img {
+  border: none;
+  clear: both;
+}
+.lightbox-details {
+  padding-top: 0.4em;
+}
+.lightbox-caption {
+  text-indent: 1em;
+}
+.lightbox-keyboardmsg {
+  float: right;
+}
+.lightbox-closebutton {
+  top: 5px;
+  right: 5px;
+}
+.lightbox-overlay {
+  background-color: #aaa;
+  background-color: rgba(200, 200, 200, 0.89);
+}
+.lightbox-overlay img {
+  border: none;
+}
