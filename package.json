@@ -1,0 +1,22 @@
+{
+  "name": "litebox",
+  "version": "0.1.0",
+  "description": "Dependency-free Lightbox",
+  "main": "./src/lightbox.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fitnr/litebox"
+  },
+  "keywords": [
+    "ender",
+    "lightbox",
+    "images"
+  ],
+  "author": "Neil Freeman",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/fitnr/litebox/issues"
+  },
+  "homepage": "https://github.com/fitnr/litebox",
+  "ender": "./src/ender.js"
+}
