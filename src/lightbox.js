@@ -1,4 +1,7 @@
 /*!
+  http://github.com/fitnr/litebox
+
+  Adapted from:
   Lightbox JS: Fullsize Image Overlays
   @author: Lokesh Dhakar
   @date: 2005-2006
@@ -6,24 +9,37 @@
   @license: Creative Commons Attribution 2.5 License - http://creativecommons.org/licenses/by/2.5/
   (basically, do anything you want, just leave my name and link)
 
- * Updates by Neil Freeman, same license.
- * http://fakeisthenewreal.org/
-
+  Updates by Neil Freeman, same license.
 */
-(function(window) {
-  var
-    document = window.document,
-    docElem = document.documentElement,
+!function (name, definition) {
 
-    // If you would like to use a custom loading image or close button reference them in the next two lines.
-    //
-    // Configuration
-    //
-    options = {
+  if (typeof module != 'undefined')
+    module.exports = definition();
+  else if (typeof define == 'function' && typeof define.amd == 'object')
+    define(definition);
+  else
+    this[name] = definition();
+
+}('lightbox', function(options) {
+  // If you would like to use a custom loading image or close button reference them in the next two lines.
+  //
+  // Configuration
+  //
+  var
+    doc = document,
+    docElem = doc.documentElement,
+    defaultOptions = {
       loadingImage: '/img/lightbox/loading.gif',
       closeButton: '', //'close.gif';
-      namespace: 'lightbox'
+      class: 'lightbox'
     };
+
+  options = (typeof options === 'object') ? options : {};
+
+  for (var prop in defaultOptions) {
+    if (defaultOptions.hasOwnProperty(prop) && !options.hasOwnPropert(prop))
+      options[prop] = defaultOptions[prop];
+  }
 
   //
   // getPageScroll()
@@ -38,13 +54,14 @@
       yScroll = self.pageYOffset;
     } else if (docElem && docElem.scrollTop) { // Explorer 6 Strict
       yScroll = docElem.scrollTop;
-    } else if (document.body) { // all other Explorers
-      yScroll = document.body.scrollTop;
+    } else if (doc.body) { // all other Explorers
+      yScroll = doc.body.scrollTop;
     }
 
     arrayPageScroll = new Array('', yScroll);
     return arrayPageScroll;
   }
+
   // getPageSize()
   // Returns array with page width, height and window width, height
   // Core code from - quirksmode.org
@@ -54,14 +71,14 @@
     var xScroll, yScroll;
 
     if (window.innerHeight && window.scrollMaxY) {
-      xScroll = document.body.scrollWidth;
+      xScroll = doc.body.scrollWidth;
       yScroll = window.innerHeight + window.scrollMaxY;
-    } else if (document.body.scrollHeight > document.body.offsetHeight) { // all but Explorer Mac
-      xScroll = document.body.scrollWidth;
-      yScroll = document.body.scrollHeight;
+    } else if (doc.body.scrollHeight > doc.body.offsetHeight) { // all but Explorer Mac
+      xScroll = doc.body.scrollWidth;
+      yScroll = doc.body.scrollHeight;
     } else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari
-      xScroll = document.body.offsetWidth;
-      yScroll = document.body.offsetHeight;
+      xScroll = doc.body.offsetWidth;
+      yScroll = doc.body.offsetHeight;
     }
 
     var windowWidth, windowHeight;
@@ -71,9 +88,9 @@
     } else if (docElem && docElem.clientHeight) { // Explorer 6 Strict Mode
       windowWidth = docElem.clientWidth;
       windowHeight = docElem.clientHeight;
-    } else if (document.body) { // other Explorers
-      windowWidth = document.body.clientWidth;
-      windowHeight = document.body.clientHeight;
+    } else if (doc.body) { // other Explorers
+      windowWidth = doc.body.clientWidth;
+      windowHeight = doc.body.clientHeight;
     }
 
     // for small pages with total height less then height of the viewport
@@ -108,6 +125,7 @@
         return;
     }
   }
+
   // getKey(key)
   // Gets keycode. If 'x' is pressed then it hides the lightbox.
   //
@@ -127,7 +145,7 @@
   //
   // listenKey()
   //
-  function listenKey() { document.onkeypress = getKey; }
+  function listenKey() { doc.onkeypress = getKey; }
 
   //
   // showLightbox()
@@ -191,7 +209,7 @@
       }
 
       // Hide select boxes as they will 'peek' through the image in IE
-      selects = document.getElementsByTagName("select");
+      selects = doc.getElementsByTagName("select");
       for (i = 0; i != selects.length; i++) {
         selects[i].style.visibility = "hidden";
       }
@@ -224,13 +242,14 @@
     objLightbox.style.display = 'none';
 
     // make select boxes visible
-    selects = document.getElementsByTagName("select");
+    selects = doc.getElementsByTagName("select");
     for (i = 0; i != selects.length; i++) {
       selects[i].style.visibility = "visible";
     }
 
     // disable keypress listener
-    document.onkeypress = '';
+    doc.onkeypress = '';
+    return false;
   }
 
   function createLightboxFn(elem) {
@@ -240,86 +259,22 @@
     };
   }
 
-  //
-  // initLightbox()
-  // Function runs on window load, going through link tags looking for rel="lightbox".
-  // These links receive onclick events that enable the lightbox display for their targets.
-  // The function also inserts html markup at the top of the page which will be used as a
-  // container for the overlay pattern and the inline image.
-  //
-  function initLightbox(namespace) {
-
-    options.namespace = namespace ? namespace : options.namespace;
-
-    if (document.querySelectorAll === undefined) {
-      return;
-    }
-
-    links = document.querySelectorAll("." + options.namespace).item(0).getElementsByTagName("a");
-
-    // loop through children, hitting anchor tags
-    for (var i = 0; i < links.length; i++) {
-      if (links[i].getAttribute("href")) {
-
-        links[i].onclick = createLightboxFn(links[i]);
-      }
-    }
-
-    // the rest of this code inserts html at the top of the page that looks like this:
-    //
-    // <div id="overlay">
-    //    <a href="#" onclick="hideLightbox(); return false;"><img id="loadingImage" /></a>
-    //  </div>
-    // <div id="lightbox">
-    //    <a href="#" onclick="hideLightbox(); return false;" title="Click anywhere to close image">
-    //      <img id="closeButton" />
-    //      <img id="lightboxImage" />
-    //    </a>
-    //    <div id="lightboxDetails">
-    //      <span id="lightboxCaption"></span>
-    //      <span id="keyboardMsg"></span>
-    //    </div>
-    // </div>
-
-    var objBody = document.getElementsByTagName("body").item(0);
-
-    // create overlay div and hardcode some functional styles (aesthetic styles are in CSS file)
-    var objOverlay = document.createElement("div");
-    objOverlay.setAttribute('id', options.namespace+'Overlay');
-    objOverlay.className = options.namespace + '-overlay';
-    objOverlay.onclick = function() {
-      hideLightbox();
-      return false;
-    };
-
-    objOverlay.style.display = 'none';
-    objOverlay.style.position = 'absolute';
-    objOverlay.style.top = '0';
-    objOverlay.style.left = '0';
-    objOverlay.style.zIndex = '90';
-    objOverlay.style.width = '100%';
-    objBody.insertBefore(objOverlay, objBody.firstChild);
-
-    options.objOverlay = objOverlay;
-
-    var arrayPageSize = getPageSize(),
-      arrayPageScroll = getPageScroll(),
-
-      // preload and create loader image
-      imgPreloader = new Image();
+  function preLoad() {
+    var imgPreloader = new Image();
 
     // if loader image found, create link to hide lightbox and create loadingimage
     imgPreloader.onload = function() {
 
-      var objLoadingImageLink = document.createElement("a");
+      var objLoadingImageLink = doc.createElement("a");
       objLoadingImageLink.setAttribute('href', '#');
       objLoadingImageLink.onclick = function() {
         hideLightbox();
         return false;
       };
+
       objOverlay.appendChild(objLoadingImageLink);
 
-      var objLoadingImage = document.createElement("img");
+      var objLoadingImage = doc.createElement("img");
       objLoadingImage.src = options.loadingImage;
       objLoadingImage.setAttribute('id', 'loadingImage');
       objLoadingImage.style.position = 'absolute';
@@ -334,11 +289,45 @@
     };
 
     imgPreloader.src = options.loadingImage;
+    return imgPreloader;
+  }
+
+  // <div id="overlay">
+  //    <a href="#" onclick="hideLightbox(); return false;"><img id="loadingImage" /></a>
+  //  </div>
+  // <div id="lightbox">
+  //    <a href="#" onclick="hideLightbox(); return false;" title="Click anywhere to close image">
+  //      <img id="closeButton" />
+  //      <img id="lightboxImage" />
+  //    </a>
+  //    <div id="lightboxDetails">
+  //      <span id="lightboxCaption"></span>
+  //      <span id="keyboardMsg"></span>
+  //    </div>
+  // </div>
+  function createLightboxElems(objBody) {
+    // create overlay div and hardcode some functional styles (aesthetic styles are in CSS file)
+    var objOverlay = doc.createElement("div"),
+      // preload and create loader image
+      imgPreloader = preLoad();
+
+    objOverlay.setAttribute('id', namespace + '-overlay');
+    objOverlay.className = namespace + '-overlay';
+    objOverlay.addEventListener('click', hideLightbox);
+    objOverlay.style.display = 'none';
+    objOverlay.style.position = 'absolute';
+    objOverlay.style.top = '0';
+    objOverlay.style.left = '0';
+    objOverlay.style.zIndex = '90';
+    objOverlay.style.width = '100%';
+    objBody.insertBefore(objOverlay, objBody.firstChild);
+
+    options.objOverlay = objOverlay;
 
     // create lightbox div, same note about styles as above
-    var objLightbox = document.createElement("div");
-    objLightbox.setAttribute('id', options.namespace);
-    objLightbox.className = options.namespace;
+    var objLightbox = doc.createElement("div");
+    objLightbox.setAttribute('id', namespace + '-body');
+    objLightbox.className = namespace + '-body';
     objLightbox.style.display = 'none';
     objLightbox.style.position = 'absolute';
     objLightbox.style.zIndex = '100';
@@ -347,13 +336,10 @@
     options.objLightbox = objLightbox;
 
     // create link
-    var objLink = document.createElement("a");
+    var objLink = doc.createElement("a");
     objLink.setAttribute('href', '#');
     objLink.setAttribute('title', 'Click to close');
-    objLink.onclick = function() {
-      hideLightbox();
-      return false;
-    };
+    objLink.addEventListener('click', hideLightbox);
     objLightbox.appendChild(objLink);
 
     // preload and create close button image
@@ -362,9 +348,9 @@
     // if close button image found,
     imgPreloadCloseButton.onload = function() {
 
-      var objCloseButton = document.createElement("img");
+      var objCloseButton = doc.createElement("img");
       objCloseButton.src = options.closeButton;
-      objCloseButton.className = options.namespace + '-closebutton';
+      objCloseButton.className = namespace + '-closebutton';
       objCloseButton.setAttribute('id', 'closeButton');
       objCloseButton.style.position = 'absolute';
       objCloseButton.style.zIndex = '200';
@@ -376,39 +362,87 @@
     imgPreloadCloseButton.src = options.closeButton;
 
     // create image
-    var objImage = document.createElement("img");
-    objImage.setAttribute('id', options.namespace+'Image');
-    objImage.className = options.namespace + '-image';
+    var objImage = doc.createElement("img");
+    objImage.setAttribute('id', namespace + 'Image');
+    objImage.className = namespace + '-image';
     objLink.appendChild(objImage);
 
     options.objImage = objImage;
 
     // create details div, a container for the caption and keyboard message
-    var objLightboxDetails = document.createElement("div");
-    objLightboxDetails.setAttribute('id', options.namespace+'Details');
-    objLightboxDetails.className = options.namespace + '-details';
+    var objLightboxDetails = doc.createElement("div");
+    objLightboxDetails.setAttribute('id', namespace + 'Details');
+    objLightboxDetails.className = namespace + '-details';
     objLightbox.appendChild(objLightboxDetails);
 
     options.objLightboxDetails = objLightboxDetails;
 
     // create caption
-    var objCaption = document.createElement("span");
-    objCaption.setAttribute("id", options.namespace+'Caption');
-    objCaption.className = options.namespace + '-caption';
+    var objCaption = doc.createElement("span");
+    objCaption.setAttribute("id", namespace + 'Caption');
+    objCaption.className = namespace + '-caption';
     objCaption.style.display = 'none';
     objLightboxDetails.appendChild(objCaption);
 
     options.objCaption = objCaption;
 
     // create keyboard message
-    //var objKeyboardMsg = document.createElement("div");
+    //var objKeyboardMsg = doc.createElement("div");
     //objKeyboardMsg.setAttribute('id','keyboardMsg');
-    //objKeyboardMsg.className = options.namespace + '-keyboardmsg';
+    //objKeyboardMsg.className = namespace + '-keyboardmsg';
     //objKeyboardMsg.innerHTML = 'press <a href="#" onclick="hideLightbox(); return false;"><kbd>x</kbd></a> to close';
     //objLightboxDetails.appendChild(objKeyboardMsg);
-
+    return objBody;
   }
 
-  window.lightbox = initLightbox;
+  //
+  // initLightbox()
+  // Function runs on window load, going through link tags looking for class="lightbox",
+  // or for links inside elements with class="lightbox" (e.g. <div class="lightbox"><a href="foo">link</a></div>)
+  // These links receive onclick events that enable the lightbox display for their targets.
+  // The function also inserts html markup at the top of the page which will be used as a
+  // container for the overlay pattern and the inline image.
+  //
+  function initLightbox(namespace) {
 
-})(window);
+    namespace = namespace ? namespace : options.namespace;
+
+    if (doc.querySelectorAll === undefined) {
+      return;
+    }
+
+    links = doc.querySelectorAll("." + namespace).item(0).getElementsByTagName("a");
+
+    // loop through children, hitting anchor tags
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute("href")) {
+        links[i].addEventListener('click', createLightboxFn(links[i]));
+      }
+    }
+
+    // listener for possible future .lightbox links.
+    doc.body.addEventListener("click", function(event) {
+      var elem = event.target, anchor;
+      while (elem) {
+
+        if (elem.tagName === 'A' && elem.getAttribute('href'))
+          anchor = elem;
+
+        if (anchor && elem.classList.contains(namespace)) {
+          createLightboxFn(anchor);
+          break;
+        }
+
+        elem = elem.parentNode;
+
+      }
+    });
+
+    // the rest of this code inserts html at the top of the page that looks like this:
+    // create lightbox elements that will display images
+    createLightboxElems(doc.body);
+  }
+
+  return initLightbox;
+
+});
