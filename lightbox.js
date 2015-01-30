@@ -8,28 +8,28 @@
 */
 !function (name, definition) {
 
-    if (typeof module != 'undefined')
-        module.exports = definition();
-    else if (typeof define == 'function' && typeof define.amd == 'object')
-        define(definition);
-    else
-        this[name] = definition();
+  if (typeof module != 'undefined')
+    module.exports = definition();
+  else if (typeof define == 'function' && typeof define.amd == 'object')
+    define(definition);
+  else
+    this[name] = definition();
 
 }('lightbox', function() {
-    var doc = window.document;
+  var doc = window.document;
 
-    function listenEsc(event) {
-        if (event.key === 27)
-            hideLightbox();
-    }
+  function listenEsc(event) {
+    if (event.key === 27)
+      hideLightbox();
+  }
 
-    function Lightbox(element, opts) {
+    function Lightbox(opts) {
         var defaults = {
-            prefix: 'lightbox',
+            namespace: 'lightbox',
             maxWidth: Infinity,
-            useTitle: true,
+            useTitle: true
         };
-
+        
         this.options = (typeof opts === 'object') ? opts : {};
 
         for (var property in defaults) {
@@ -40,15 +40,10 @@
         this._wrapper = null;
         this._figure = null;
         this.captionheight = 0;
-
-        if (element) {
-            this.attach(element);
-        }
     }
 
     Lightbox.prototype.setFigureDims = function(img) {
-        var w = img.width,
-            h = img.height;
+        var w = img.width, h = img.height;
         this.figure.style.width = (w < options.MaxWidth) ? w : options.MaxWidth;
         this.figure.style.height = ((w < options.MaxWidth) ? h : options.MaxWidth / w * h) + this.captionHeight;
     };
@@ -74,7 +69,7 @@
         wrapper.style.display = loading.style.display = 'block';
 
         var captiontext = (this.options.useTitle) ? elem.getAttribute('title') : elem.dataset.caption;
-
+ 
         if (captiontext) {
             caption.style.display = 'block';
             caption.innerText = elem.getAttribute('title');
@@ -88,7 +83,7 @@
         var img = doc.createElement('img');
 
         img.addEventListener('load', this.setFigureDims);
-        img.addEventListener('load', function() {
+        img.addEventListener('load', function(){
             this.figure.style.display = 'block';
         });
 
@@ -106,15 +101,14 @@
         doc.removeEventListener('keypress', listenEsc);
     };
 
-    /* elements created:
-        <div class="lightbox-overlay">
-          <div class="lightbox-loading"><div>Loading</div></div>
-          <figure>
-            <img src="{ a.href }" />
-            <figcaption>{ a.title }</figcaption>
-          </figure>
-        </div>
-    */
+  // elements created:
+  // <div class="lightbox-overlay">
+  //   <div class="lightbox-loading"><div>Loading</div></div>
+  //   <figure>
+  //     <img src="{ a.href }" />
+  //     <figcaption>{ a.title }</figcaption>
+  //   </figure>
+  // </div>
     Lightbox.prototype.create = function() {
         this._wrapper = doc.createElement("div");
         this._wrapper.className = options.namespace + '-overlay';
@@ -135,17 +129,19 @@
         var figure = doc.createElement('figure');
         this._wrapper.appendChild(figure);
 
+        // create caption
         figure.appendChild(doc.createElement('figcaption'));
 
         return this._wrapper;
     };
 
-    Lightbox.prototype.attach = function(element) {
-        element.addEventListener('click', function(event) {
-            this.show(element);
-            event.preventDefault();
-        });
-    };
+  return function (element, opts) {
+    var lightbox = Lightbox(opts);
 
-    return Lightbox;
+    element.addEventListener('click', function(event) {
+      lightbox.show(element);
+      event.preventDefault();
+    });
+  };
+
 });
