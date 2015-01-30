@@ -1,10 +1,6 @@
 /*!
   http://github.com/fitnr/litebox
-  Adapted from:
-  Lightbox JS: Fullsize Image Overlays
-  original author: Lokesh Dhakar, 2005-2006
-  http://huddletogether.com/projects/lightbox/
-  license: Creative Commons Attribution 2.5 License - http://creativecommons.org/licenses/by/2.5/
+  Concept reworked from Lokesh Dhakar, 2005-2006 http://huddletogether.com/projects/lightbox/ Creative Commons Attribution 2.5 License - http://creativecommons.org/licenses/by/2.5/
 */
 !function (name, definition) {
 
@@ -15,17 +11,17 @@
     else
         this[name] = definition();
 
-}('lightbox', function() {
+}('litebox', function() {
     var doc = window.document;
 
     function listenEsc(event) {
         if (event.key === 27)
-            hideLightbox();
+            hideLitebox();
     }
 
-    function Lightbox(element, opts) {
+    function Litebox(element, opts) {
         var defaults = {
-            prefix: 'lightbox',
+            prefix: 'litebox',
             maxWidth: Infinity,
             useTitle: true,
         };
@@ -46,23 +42,23 @@
         }
     }
 
-    Lightbox.prototype.setFigureDims = function(img) {
+    Litebox.prototype.setFigureDims = function(img) {
         var w = img.width,
             h = img.height;
         this.figure.style.width = (w < options.MaxWidth) ? w : options.MaxWidth;
         this.figure.style.height = ((w < options.MaxWidth) ? h : options.MaxWidth / w * h) + this.captionHeight;
     };
 
-    Lightbox.prototype.wrapper = function() {
+    Litebox.prototype.wrapper = function() {
         return this._wrapper || this.create();
     };
 
-    Lightbox.prototype.figure = function() {
+    Litebox.prototype.figure = function() {
         return this._figure || this.wrapper().getElementsByTagName('figure').item(0);
     };
 
-    // Preloads images. Pleaces new image in lightbox then centers and displays.
-    Lightbox.prototype.show = function(elem) {
+    // Preloads images. Pleaces new image in litebox then centers and displays.
+    Litebox.prototype.show = function(elem) {
         // prep objects
         var wrapper = this.wrapper(),
             figure = this.figure(),
@@ -100,25 +96,25 @@
         doc.addEventListener('keypress', listenEsc);
     };
 
-    Lightbox.prototype.hide = function() {
+    Litebox.prototype.hide = function() {
         this.wrapper.style.display = 'none';
         this.wrapper.removeChild(this.wrapper.getElementsByTagName('img').item(0));
         doc.removeEventListener('keypress', listenEsc);
     };
 
     /* elements created:
-        <div class="lightbox-overlay">
-          <div class="lightbox-loading"><div>Loading</div></div>
+        <div class="litebox-overlay">
+          <div class="litebox-loading"><div>Loading</div></div>
           <figure>
             <img src="{ a.href }" />
             <figcaption>{ a.title }</figcaption>
           </figure>
         </div>
     */
-    Lightbox.prototype.create = function() {
+    Litebox.prototype.create = function() {
         this._wrapper = doc.createElement("div");
         this._wrapper.className = options.namespace + '-overlay';
-        this._wrapper.addEventListener('click', hideLightbox);
+        this._wrapper.addEventListener('click', hideLitebox);
         this._wrapper.style.width = window.innerWidth + 'px';
         this._wrapper.style.height = window.innerHeight + 'px';
         doc.body.insertBefore(this._wrapper, doc.body.firstChild);
@@ -140,12 +136,14 @@
         return this._wrapper;
     };
 
-    Lightbox.prototype.attach = function(element) {
+    Litebox.prototype.attach = function(element) {
         element.addEventListener('click', function(event) {
             this.show(element);
+            console.log(event);
             event.preventDefault();
+            return false;
         });
     };
 
-    return Lightbox;
+    return Litebox;
 });

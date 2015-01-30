@@ -1,7 +1,7 @@
 require('smoosh').config({
   "JAVASCRIPT": {
     "DIST_DIR": "./",
-    "lightbox": ['./src/lightbox.js']
+    "litebox": ['./src/litebox.js']
   },
   "JSHINT_OPTS": {
     "boss": true,

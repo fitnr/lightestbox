@@ -1,12 +1,11 @@
 !function($) {
-
-    var Lightbox = require('lightbox');
+    var Litebox = require('litebox');
 
     $.ender({
-        lightbox: function(opts) {
-            var lightbox = new Lightbox(false, opts);
+        litebox: function(opts) {
+            var litebox = new Litebox(false, opts);
             return this.forEach(function (el) {
-                lightbox.attach(el);
+                litebox.attach(el);
             });
         },
     }, true);

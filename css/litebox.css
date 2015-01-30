@@ -1,4 +1,4 @@
-.lightbox-wrapper {
+.litebox-wrapper {
   position: relative;
   background-color: #aaa;
   background-color: rgba(200, 200, 200, 0.89);
@@ -8,17 +8,17 @@
   z-index: 100;
 }
 
-.lightbox-wrapper figure {
+.litebox-wrapper figure {
   z-index: 200;
 }
 
-.lightbox-wrapper img,
-.lightbox-wrapper figcaption {
+.litebox-wrapper img,
+.litebox-wrapper figcaption {
   background-color: #fff;
 }
 
-.lightbox-wrapper figure,
-.lightbox-loading {
+.litebox-wrapper figure,
+.litebox-loading {
   position: absolute;
   top: 0;
   left: 0;
@@ -27,18 +27,18 @@
   margin: auto;
 }
 
-.lightbox-wrapper,
-.lightbox-loading {
+.litebox-wrapper,
+.litebox-loading {
   display: none;
 }
 /* http://projects.lukehaas.me/css-loaders/ */
-.lightbox-loading {
+.litebox-loading {
   z-index: 150;
   height: 150px;
   width: 150px;
 }
 
-.lightbox-loading div {
+.litebox-loading div {
   border-radius: 50%;
   margin: 4em auto;
   font-size: 16px;

@@ -1,8 +1,8 @@
 {
   "name": "litebox",
   "version": "0.1.0",
-  "description": "Dependency-free Lightbox",
-  "main": "./src/lightbox.js",
+  "description": "Dependency-free lightboxes",
+  "main": "./litebox.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/fitnr/litebox"
