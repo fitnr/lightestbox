@@ -18,5 +18,8 @@
     "url": "https://github.com/fitnr/litebox/issues"
   },
   "homepage": "https://github.com/fitnr/litebox",
-  "ender": "./src/ender.js"
+  "ender": "./src/ender.js",
+  "devDependencies": {
+    "smoosh": "^0.4.1"
+  }
 }
