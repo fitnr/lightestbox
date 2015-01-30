@@ -1,8 +1,7 @@
 /*!
   http://github.com/fitnr/litebox
-  Concept reworked from Lokesh Dhakar, 2005-2006 http://huddletogether.com/projects/lightbox/ Creative Commons Attribution 2.5 License - http://creativecommons.org/licenses/by/2.5/
 */
-!function (name, definition) {
+! function(name, definition) {
 
     if (typeof module != 'undefined')
         module.exports = definition();
@@ -14,9 +13,19 @@
 }('litebox', function() {
     var doc = window.document;
 
-    function listenEsc(event) {
-        if (event.key === 27)
-            hideLitebox();
+    function listenEsc(context) {
+        return function(event) {
+            if (event.key === 27) context.hide();
+        };
+    }
+
+    function bind(element, type, callback) {
+        var context = this;
+        var handler = function(ev) {
+            return callback.call(context, element, ev);
+        };
+
+        element.addEventListener(type, handler);
     }
 
     function Litebox(element, opts) {
@@ -35,18 +44,21 @@
 
         this._wrapper = null;
         this._figure = null;
-        this.captionheight = 0;
+        this.escListener = listenEsc(this);
 
         if (element) {
             this.attach(element);
         }
+        return this;
     }
 
-    Litebox.prototype.setFigureDims = function(img) {
+    Litebox.prototype.sizeFigure = function(img) {
         var w = img.width,
-            h = img.height;
-        this.figure.style.width = (w < options.MaxWidth) ? w : options.MaxWidth;
-        this.figure.style.height = ((w < options.MaxWidth) ? h : options.MaxWidth / w * h) + this.captionHeight;
+            h = img.height,
+            max = this.options.maxWidth,
+            figure = this.figure();
+        figure.style.width = ((w < max) ? w : max) + 'px';
+        figure.style.height = ((w < max) ? h : max / w * h) + 'px';
     };
 
     Litebox.prototype.wrapper = function() {
@@ -58,52 +70,62 @@
     };
 
     // Preloads images. Pleaces new image in litebox then centers and displays.
-    Litebox.prototype.show = function(elem) {
+    Litebox.prototype.show = function(elem, event) {
         // prep objects
         var wrapper = this.wrapper(),
             figure = this.figure(),
             loading = wrapper.getElementsByTagName('div').item(0),
-            caption = wrapper.getElementsByTagName('figcaption').item(0);
+            caption = figure.getElementsByTagName('figcaption').item(0);
+
+        // get this out of the way
+        event.preventDefault();
 
         // show wrapper and loading css, hide figure
         figure.style.display = 'none';
         wrapper.style.display = loading.style.display = 'block';
 
-        var captiontext = (this.options.useTitle) ? elem.getAttribute('title') : elem.dataset.caption;
+        var title = elem.getAttribute('title'),
+            captiontext = (this.options.useTitle) ? title : elem.dataset.caption;
 
         if (captiontext) {
             caption.style.display = 'block';
-            caption.innerText = elem.getAttribute('title');
-            this.captionHeight = getComputedStyle(wrapper.height.replace('px', ''));
+            caption.innerText = captiontext;
         } else {
             caption.style.display = 'none';
-            this.captionHeight = 0;
+            caption.innerText = '';
         }
 
         // create image
         var img = doc.createElement('img');
 
-        img.addEventListener('load', this.setFigureDims);
-        img.addEventListener('load', function() {
-            this.figure.style.display = 'block';
+        bind.call(this, img, 'load', this.sizeFigure);
+        bind.call(this, img, 'load', function() {
+            figure.style.display = 'block';
         });
 
-        wrapper.getElementsByTagName('figure').item(0).insertBefore(img, caption);
+        figure.insertBefore(img, caption);
 
         img.src = elem.href;
 
         // Check for 'esc' keypress
-        doc.addEventListener('keypress', listenEsc);
+        doc.addEventListener('keypress', this.escListener);
     };
 
     Litebox.prototype.hide = function() {
-        this.wrapper.style.display = 'none';
-        this.wrapper.removeChild(this.wrapper.getElementsByTagName('img').item(0));
-        doc.removeEventListener('keypress', listenEsc);
+        var figure = this.figure();
+        this.wrapper().style.display = 'none';
+        figure.removeChild(figure.getElementsByTagName('img').item(0));
+        doc.removeEventListener('keypress', this.escListener);
+    };
+
+    Litebox.prototype.sizeWrapper = function() {
+        var wrapper = this.wrapper();
+        wrapper.style.width = window.innerWidth + 'px';
+        wrapper.style.height = window.innerHeight + 'px';
     };
 
     /* elements created:
-        <div class="litebox-overlay">
+        <div class="litebox-wrapper">
           <div class="litebox-loading"><div>Loading</div></div>
           <figure>
             <img src="{ a.href }" />
@@ -113,36 +135,32 @@
     */
     Litebox.prototype.create = function() {
         this._wrapper = doc.createElement("div");
-        this._wrapper.className = options.namespace + '-overlay';
-        this._wrapper.addEventListener('click', hideLitebox);
-        this._wrapper.style.width = window.innerWidth + 'px';
-        this._wrapper.style.height = window.innerHeight + 'px';
+        this._wrapper.className = this.options.prefix + '-wrapper';
+        this.sizeWrapper();
+
+        bind.call(this, this._wrapper, 'click', this.hide);
+        bind.call(this, window, 'resize', this.sizeWrapper);
+
         doc.body.insertBefore(this._wrapper, doc.body.firstChild);
 
         var loading = doc.createElement('div');
-        loading.className = options.namespace + '-loading';
-
+        loading.className = this.options.prefix + '-loading';
         this._wrapper.appendChild(loading);
 
         loader = doc.createElement('div');
         loader.innerText = 'Loading...';
         loading.appendChild(loader);
 
-        var figure = doc.createElement('figure');
+        this._figure = doc.createElement('figure');
         this._wrapper.appendChild(figure);
 
-        figure.appendChild(doc.createElement('figcaption'));
+        this._figure.appendChild(doc.createElement('figcaption'));
 
         return this._wrapper;
     };
 
     Litebox.prototype.attach = function(element) {
-        element.addEventListener('click', function(event) {
-            this.show(element);
-            console.log(event);
-            event.preventDefault();
-            return false;
-        });
+        bind.call(this, element, 'click', this.show);
     };
 
     return Litebox;

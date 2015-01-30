@@ -1,7 +1,6 @@
 .litebox-wrapper {
   position: relative;
-  background-color: #aaa;
-  background-color: rgba(200, 200, 200, 0.89);
+  background-color: rgba(0, 0, 0, 0.66);
   top: 0;
   left: 0;
   position: absolute;
@@ -10,9 +9,11 @@
 
 .litebox-wrapper figure {
   z-index: 200;
+  padding-bottom: 5px;
 }
 
 .litebox-wrapper img,
+.litebox-wrapper figure,
 .litebox-wrapper figcaption {
   background-color: #fff;
 }
