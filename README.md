@@ -24,7 +24,7 @@ But wait, you don't want to deal with all the getElementById junk. So run `ender
 
 ````javascript
 $.domReady(function(){
-    $('.foo').litebox();
+    $('#foo').litebox();
 });
 ````
 
@@ -35,7 +35,7 @@ This is pretty easy, here's another example showing how Litebox isn't limited to
 
 <script>
 $.domReady(function(){
-    $('.foo').litebox();
+    $('#foo').litebox();
 });
 </script>
 ````
@@ -57,7 +57,7 @@ Litebox is a purposefully minimal tool, but there are a few options:
 Pass arguments just like you would imagine:
 
 ````javascript
-$('.foo').litebox({
+$('#foo').litebox({
     maxWidth: 600, // in pixels
     useTitle: false,
     prefix: 'special'
