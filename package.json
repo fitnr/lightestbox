@@ -1,6 +1,6 @@
 {
   "name": "litebox",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "Dependency-free lightboxes",
   "main": "./litebox.js",
   "repository": {
@@ -12,7 +12,7 @@
     "lightbox",
     "images"
   ],
-  "author": "Neil Freeman",
+  "author": "Neil Freeman <contact@fakeisthenewreal.org>",
   "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/fitnr/litebox/issues"
@@ -21,10 +21,6 @@
   "ender": "./src/ender.js",
   "devDependencies": {
     "clean-css": "^3.0.7",
-    "smoosh": "^0.4.1",
     "uglify-js": "^2.4.16"
-  },
-  "files": [
-    "src"
-  ] 
+  }
 }

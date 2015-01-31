@@ -2,7 +2,7 @@
 
 Create simple lightboxes to pop up images. Litebox has no dependencies and weighs in at only 3 kb.
 
-Litebox is also an ender-ready module, and plays well with domReady.
+Litebox plays well if your favorite browser module-builder, whether it's Browserify, Ender, whatver. It especially works will with DomReady.
 
 ## Boxing
 

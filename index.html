@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/litebox.css">
+    <script src="ender.js"></script>
+    <script src="litebox.js"></script>
+</head>
+
+<body>
+    <a href="http://placekitten.com/g/600/600" id="__a__" class="lightbox" title="cutest one">hello world</a>
+
+    <div><span id="bar" title="of" data-img="http://placekitten.com/g/700/700">hello there now</span></div>
+    <script type="text/javascript">
+    $.domReady(function(){
+        $('#__a__').litebox();
+        $('#bar').litebox();
+    });
+    function simulateClick(id) {
+  var event = new MouseEvent('click', {
+    'view': window,
+    'bubbles': true,
+    'cancelable': true
+  });
+  var cb = document.getElementById(id); 
+  var canceled = !cb.dispatchEvent(event);
+  if (canceled) {
+    // A handler called preventDefault.
+    console.log("canceled");
+  } else {
+    // None of the handlers called preventDefault.
+    console.log("not canceled");
+  }
+}
+
+    </script>
+</body>
+</html>
+

@@ -165,7 +165,13 @@
     };
 
     Litebox.prototype.attach = function(element) {
-        bind.call(this, element, 'click', this.show);
+        try {
+            bind.call(this, element, 'click', this.show);    
+        } catch (e) {
+            // noop
+        }
+
+        return element;
     };
 
     return Litebox;
