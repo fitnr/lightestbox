@@ -20,6 +20,8 @@
   "homepage": "https://github.com/fitnr/litebox",
   "ender": "./src/ender.js",
   "devDependencies": {
-    "smoosh": "^0.4.1"
+    "clean-css": "^3.0.7",
+    "smoosh": "^0.4.1",
+    "uglify-js": "^2.4.16"
   }
 }
