@@ -6,7 +6,14 @@ Use it with jQuery, Zepto or Ender; or compile it in with Browserify and your fa
 
 ## Boxing
 
-Litebox plays of links, so let's say we have this html:
+First off, you'll need to include the CSS and JS:
+
+````html
+<link rel="stylesheet" href="litebox.min.css">
+<link rel="stylesheet" href="litebox.min.js">
+````
+
+Let's say we have this html:
 
 ````html
 <a id="foo" class="boxy" href="img1.png">Link 1</a>
@@ -26,17 +33,24 @@ Note that we're not limited to `<a>` tags. Setting a `data-img` attribute will l
 
 ## Libraries
 
-But wait, you probably don't want to deal with all that getElementById junk. If you're running Zepto or jQuery, just include the appropriate `litebox.FOO.min.js` file and you can do this:
+But wait, you probably don't want to deal with all that getElementById junk. If you're running Zepto or jQuery, just include the appropriate `litebox.*.min.js` file and you can do this:
 
 ````javascript
-$('.boxy').litebox();
+<link rel="stylesheet" href="litebox.jquery.min.js">
+<script>
+$(document).ready(function(){
+    $('.boxy').litebox();    
+});
+</script>
 ````
+
+Note that you don't have to include `litebox.min.js` if you're using the jQuery or Zepto modules. You will need the CSS, though.
 
 Run `ender add litebox` and you can do the same thing (assuming you have a selection engine running).
 
 ## Captions
 
-Want your image to have a caption? Add a `title` attribute to your link, and that text will be your caption. Don't like the way the caption looks? Write some css - the selector is `.litebox-wrapper figcaption`.
+Want your image to have a caption? Add a `title` attribute to your link, and that text will be your caption. Don't like the way the caption looks? Write some CSS - the selector is `.litebox-wrapper figcaption`.
 
 Don't want your `title` attribute used that way? Read on!
 
