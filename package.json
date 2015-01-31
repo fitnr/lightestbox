@@ -1,6 +1,6 @@
 {
   "name": "litebox",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Dependency-free lightboxes",
   "main": "./litebox.js",
   "repository": {

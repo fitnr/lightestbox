@@ -77,6 +77,11 @@
 
     // Preloads images. Pleaces new image in litebox then centers and displays.
     Litebox.prototype.show = function(elem, event) {
+        // do nothing if not img url not found
+        var src = elem.href || elem.dataset.img || false;
+        if (!src)
+            return false;
+
         // prep objects
         var wrapper = this.wrapper(),
             figure = this.figure(),
@@ -108,9 +113,8 @@
             figure.style.display = 'block';
         });
 
+        img.src = src;
         figure.insertBefore(img, caption);
-
-        img.src = elem.href || elem.dataset.img;
 
         // Check for 'esc' keypress
         doc.addEventListener('keypress', this.escListener);

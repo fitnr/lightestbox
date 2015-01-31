@@ -9,8 +9,9 @@ Litebox plays well if your favorite browser module-builder, whether it's Browser
 Litebox plays of links, so let's say we have this html:
 
 ````html
-<a id="foo" href="image.png">Link</a>
-<a id="bar" href="image.png">Link</a>
+<a id="foo" class="boxy" href="img1.png">Link 1</a>
+<a id="bar" class="boxy" href="img2.png">Link 2</a>
+<span id="baz" class="boxy" data-img="img3.png">Link 3</span>
 ````
 
 Once Litebox and the DOM are loaded, we can run:
@@ -20,25 +21,25 @@ var L = new litebox(document.getElementById('foo'));
 L.attach(document.getElementById('bar')); // keep attaching elements
 ````
 
-But wait, you don't want to deal with all the getElementById junk. So run `ender add litebox domready` and then you can do this:
+or:
+
+````js
+var elems = document.querySelectorAll('.boxy');
+var L = new litebox();
+for (var i; i < elems.length; i++) {
+    L.attach(elems[i]);
+}
+````
+
+But wait, you don't want to deal with all the getElementById junk. So run `ender add litebox domready qwery` and then you can do this:
 
 ````javascript
 $.domReady(function(){
-    $('#foo').litebox();
+    $('.boxy').litebox();
 });
 ````
 
-This is pretty easy, here's another example showing how Litebox isn't limited to working on `<a>` tags. Set a `data-img` attribute :
-
-````html
-<div id="foo" data-img="image.png">div div div</div>
-
-<script>
-$.domReady(function(){
-    $('#foo').litebox();
-});
-</script>
-````
+Note that we're not limited to `<a>` tags. Setting a `data-img` attribute will let Litebox work nicely with most elements.
 
 ## Captions
 
