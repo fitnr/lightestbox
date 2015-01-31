@@ -36,9 +36,7 @@
         this._wrapper = null;
         this._figure = null;
         this.escListener = listenEsc(this);
-        if (element) {
-            this.attach(element);
-        }
+        if (element) this.add(element);
         return this;
     }
     Litebox.prototype.sizeFigure = function(img) {
@@ -54,6 +52,9 @@
     };
     // Preloads images. Pleaces new image in litebox then centers and displays.
     Litebox.prototype.show = function(elem, event) {
+        // do nothing if not img url not found
+        var src = elem.href || elem.dataset.img || false;
+        if (!src) return false;
         // prep objects
         var wrapper = this.wrapper(), figure = this.figure(), loading = wrapper.getElementsByTagName("div").item(0), caption = figure.getElementsByTagName("figcaption").item(0);
         // get this out of the way
@@ -75,8 +76,8 @@
         bind.call(this, img, "load", function() {
             figure.style.display = "block";
         });
+        img.src = src;
         figure.insertBefore(img, caption);
-        img.src = elem.href || elem.dataset.img;
         // Check for 'esc' keypress
         doc.addEventListener("keypress", this.escListener);
     };
@@ -118,8 +119,11 @@
         this._figure.appendChild(doc.createElement("figcaption"));
         return this._wrapper;
     };
-    Litebox.prototype.attach = function(element) {
-        bind.call(this, element, "click", this.show);
+    Litebox.prototype.add = function(element) {
+        try {
+            bind.call(this, element, "click", this.show);
+        } catch (e) {}
+        return element;
     };
     return Litebox;
 });

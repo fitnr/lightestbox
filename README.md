@@ -18,7 +18,7 @@ Once Litebox and the DOM are loaded, we can run:
 
 ````js
 var L = new litebox(document.getElementById('foo'));
-L.attach(document.getElementById('bar')); // keep attaching elements
+L.add(document.getElementById('bar')); // keep adding elements
 ````
 
 or:
@@ -27,7 +27,7 @@ or:
 var elems = document.querySelectorAll('.boxy');
 var L = new litebox();
 for (var i; i < elems.length; i++) {
-    L.attach(elems[i]);
+    L.add(elems[i]);
 }
 ````
 
@@ -70,5 +70,5 @@ If you're using Litebox without ender, pass the options as the second argument w
 ````javascript
 L = new litebox(false, {useTitle: false});
 // You'd probably loop through some elements here.
-L.attach(document.getElementById('foo'));
+L.add(document.getElementById('foo'));
 ````

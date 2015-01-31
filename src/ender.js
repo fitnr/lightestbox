@@ -3,8 +3,9 @@
     $.ender({
         litebox: function(opts) {
             var litebox = new Litebox(false, opts);
+
             return this.forEach(function (el) {
-                litebox.attach(el);
+                litebox.add(el);
             });
         },
     }, true);

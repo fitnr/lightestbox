@@ -52,9 +52,9 @@
         this._figure = null;
         this.escListener = listenEsc(this);
 
-        if (element) {
-            this.attach(element);
-        }
+        if (element)
+            this.add(element);
+
         return this;
     }
 
@@ -168,7 +168,7 @@
         return this._wrapper;
     };
 
-    Litebox.prototype.attach = function(element) {
+    Litebox.prototype.add = function(element) {
         try {
             bind.call(this, element, 'click', this.show);    
         } catch (e) {
