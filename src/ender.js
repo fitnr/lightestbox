@@ -1,6 +1,5 @@
 !function($) {
     var Litebox = require('litebox');
-
     $.ender({
         litebox: function(opts) {
             var litebox = new Litebox(false, opts);
@@ -9,5 +8,4 @@
             });
         },
     }, true);
-
 }(ender);
