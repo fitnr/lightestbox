@@ -114,7 +114,7 @@
         loader.innerText = "Loading...";
         loading.appendChild(loader);
         this._figure = doc.createElement("figure");
-        this._wrapper.appendChild(figure);
+        this._wrapper.appendChild(this._figure);
         this._figure.appendChild(doc.createElement("figcaption"));
         return this._wrapper;
     };
