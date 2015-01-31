@@ -1,8 +1,8 @@
 # Litebox
 
-Create simple lightboxes to pop up images. Litebox has no dependencies and weighs in at only 3 kb.
+Create simple lightboxes to pop up images. Litebox is library-agnostic, has no dependencies and weighs in at only 3 kb.
 
-Litebox plays well if your favorite browser module-builder, whether it's Browserify, Ender, whatver. It especially works will with DomReady.
+Use it with jQuery, Zepto or Ender; or compile it in with Browserify and your favorite tools.
 
 ## Boxing
 
@@ -18,34 +18,27 @@ Once Litebox and the DOM are loaded, we can run:
 
 ````js
 var L = new litebox(document.getElementById('foo'));
-L.add(document.getElementById('bar')); // keep adding elements
-````
-
-or:
-
-````js
-var elems = document.querySelectorAll('.boxy');
-var L = new litebox();
-for (var i; i < elems.length; i++) {
-    L.add(elems[i]);
-}
-````
-
-But wait, you don't want to deal with all the getElementById junk. So run `ender add litebox domready qwery` and then you can do this:
-
-````javascript
-$.domReady(function(){
-    $('.boxy').litebox();
-});
+L.add(document.getElementById('bar'));
+L.add(document.getElementById('baz')); // a loop would work, too
 ````
 
 Note that we're not limited to `<a>` tags. Setting a `data-img` attribute will let Litebox work nicely with most elements.
+
+## Libraries
+
+But wait, you probably don't want to deal with all that getElementById junk. If you're running Zepto or jQuery, just include the appropriate `litebox.FOO.min.js` file and you can do this:
+
+````javascript
+$('.boxy').litebox();
+````
+
+Run `ender add litebox` and you can do the same thing (assuming you have a selection engine running).
 
 ## Captions
 
 Want your image to have a caption? Add a `title` attribute to your link, and that text will be your caption. Don't like the way the caption looks? Write some css - the selector is `.litebox-wrapper figcaption`.
 
-Don't want your `title` attribute used that way? Read on:
+Don't want your `title` attribute used that way? Read on!
 
 ## Options
 
@@ -65,10 +58,27 @@ $('#foo').litebox({
 });
 ````
 
-If you're using Litebox without ender, pass the options as the second argument when you create the Litebox object:
+If you're using Litebox without a library, pass the options as the second argument when you create the Litebox object:
 
 ````javascript
-L = new litebox(false, {useTitle: false});
-// You'd probably loop through some elements here.
-L.add(document.getElementById('foo'));
+var L = new litebox(false, {useTitle: false});
+L.add(elem);
+````
+
+## Display style
+
+Litebox comes with a bare-bones style for the pop-ups, with the expectation is that developers will customize it. For reference, here are the elements it adds to the DOM:
+
+````html
+<div class="litebox-wrapper" style="width: <dynamic>; height: <dynamic>;">
+<!-- litebox-wrapper dynamically expands fit the window -->
+    <div class="litebox-loading" style="display: block;">
+    <!-- by default, litebox-loading has a simple css animation. Grab another one or add a animated gif background-image -->
+        <div>Loading...</div>
+    </div>
+    <figure style="display: block; width: <dynamic>; height: <dynamic>;">
+        <img src="img.png">
+        <figcaption>Caption</figcaption>
+    </figure>
+</div>
 ````

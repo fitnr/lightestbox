@@ -18,7 +18,7 @@
     "url": "https://github.com/fitnr/litebox/issues"
   },
   "homepage": "https://github.com/fitnr/litebox",
-  "ender": "./src/ender.js",
+  "ender": "./lib/ender.js",
   "devDependencies": {
     "clean-css": "^3.0.7",
     "uglify-js": "^2.4.16"
