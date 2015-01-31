@@ -61,7 +61,7 @@
     Litebox.prototype.sizeFigure = function(img) {
         var w = img.width,
             h = img.height,
-            max = this.options.maxWidth,
+            max = Math.min(this.options.maxWidth, this.wrapper().style.width.replace('px', '')),
             figure = this.figure();
         figure.style.width = ((w < max) ? w : max) + 'px';
         figure.style.height = ((w < max) ? h : max / w * h) + 'px';
