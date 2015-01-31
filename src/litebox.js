@@ -90,15 +90,14 @@
         figure.style.display = 'none';
         wrapper.style.display = loading.style.display = 'block';
 
-        var title = elem.getAttribute('title'),
-            captiontext = (this.options.useTitle) ? title : elem.dataset.caption;
+        var captiontext = (this.options.useTitle) ? elem.title : elem.dataset.caption;
 
         if (captiontext) {
             caption.style.display = 'block';
-            caption.innerText = captiontext;
+            caption.innerHTML = captiontext;
         } else {
             caption.style.display = 'none';
-            caption.innerText = '';
+            caption.innerHTML = '';
         }
 
         // create image
@@ -111,7 +110,7 @@
 
         figure.insertBefore(img, caption);
 
-        img.src = elem.href;
+        img.src = elem.href || elem.dataset.img;
 
         // Check for 'esc' keypress
         doc.addEventListener('keypress', this.escListener);

@@ -9,7 +9,10 @@
 
 .litebox-wrapper figure {
   z-index: 200;
-  padding-bottom: 5px;
+}
+.litebox-wrapper figcaption {
+  padding: 0.5em;
+  margin-top: -6px;
 }
 
 .litebox-wrapper img,

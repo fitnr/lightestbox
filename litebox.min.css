@@ -1,4 +1,4 @@
-.litebox-wrapper{background-color:rgba(0,0,0,.66);top:0;left:0;position:absolute;z-index:100}.litebox-wrapper figure{z-index:200;padding-bottom:5px}.litebox-wrapper figcaption,.litebox-wrapper figure,.litebox-wrapper img{background-color:#fff}.litebox-loading,.litebox-wrapper figure{position:absolute;top:0;left:0;bottom:0;right:0;margin:auto}.litebox-loading,.litebox-wrapper{display:none}.litebox-loading{z-index:150;height:85px;width:85px}/*!
+.litebox-wrapper{background-color:rgba(0,0,0,.66);top:0;left:0;position:absolute;z-index:100}.litebox-wrapper figure{z-index:200}.litebox-wrapper figcaption{padding:.5em;margin-top:-6px}.litebox-wrapper figcaption,.litebox-wrapper figure,.litebox-wrapper img{background-color:#fff}.litebox-loading,.litebox-wrapper figure{position:absolute;top:0;left:0;bottom:0;right:0;margin:auto}.litebox-loading,.litebox-wrapper{display:none}.litebox-loading{z-index:150;height:85px;width:85px}/*!
   http://projects.lukehaas.me/css-loaders/
   The MIT License (MIT)
 
