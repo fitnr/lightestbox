@@ -1,13 +1,13 @@
-main = litebox.js
+main = litebox
 
 .PHONY: all
-all: litebox.min.js litebox.min.css litebox.jquery.min.js litebox.zepto.min.js
+all: $(main).min.js $(main).min.css $(main).jquery.min.js $(main).zepto.min.js
 
-litebox.min.js: $(main)
+$(main).min.js: $(main).js
 	node_modules/.bin/uglifyjs $^ -mc --screw-ie8 > $@
 
-litebox.%.min.js: $(main) lib/%.js
+$(main).%.min.js: $(main).js lib/%.js
 	node_modules/.bin/uglifyjs $^ -mc --screw-ie8 > $@
 
-litebox.min.css: css/litebox.css
+%.min.css: css/%.css
 	node_modules/.bin/cleancss $^ > $@
