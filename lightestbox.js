@@ -1,6 +1,6 @@
 /*!
-    Litebox - dependency free lightboxes
-    http://github.com/fitnr/litebox
+    Lightestbox - dependency free lightboxes
+    http://github.com/fitnr/lightestbox
     Copyright (C) 2015 Neil Freeman
     License GPL v3
 */
@@ -13,7 +13,7 @@
     else
         this[name] = definition();
 
-}('litebox', function() {
+}('lightestbox', function() {
     var doc = window.document;
 
     function listenEsc(context) {
@@ -31,9 +31,9 @@
         element.addEventListener(type, handler);
     }
 
-    function Litebox(element, opts) {
+    function Lightestbox(element, opts) {
         var defaults = {
-            prefix: 'litebox',
+            prefix: 'ltbx',
             maxWidth: Infinity,
             useTitle: true,
         };
@@ -55,7 +55,7 @@
         return this;
     }
 
-    Litebox.prototype.sizeFigure = function(img) {
+    Lightestbox.prototype.sizeFigure = function(img) {
         var w = img.width,
             h = img.height,
             max = Math.min(this.options.maxWidth, this.wrapper().style.width.replace('px', '')),
@@ -64,16 +64,16 @@
         figure.style.height = ((w < max) ? h : max / w * h) + 'px';
     };
 
-    Litebox.prototype.wrapper = function() {
+    Lightestbox.prototype.wrapper = function() {
         return this._wrapper || this.create();
     };
 
-    Litebox.prototype.figure = function() {
+    Lightestbox.prototype.figure = function() {
         return this._figure || this.wrapper().getElementsByTagName('figure').item(0);
     };
 
-    // Preloads images. Pleaces new image in litebox then centers and displays.
-    Litebox.prototype.show = function(elem, event) {
+    // Preloads images. Pleaces new image in lightestbox then centers and displays.
+    Lightestbox.prototype.show = function(elem, event) {
         // do nothing if not img url not found
         var src = elem.href || elem.dataset.img || false;
         if (!src)
@@ -117,31 +117,32 @@
         doc.addEventListener('keypress', this.escListener);
     };
 
-    Litebox.prototype.hide = function() {
+    Lightestbox.prototype.hide = function() {
         var figure = this.figure();
         this.wrapper().style.display = 'none';
         figure.removeChild(figure.getElementsByTagName('img').item(0));
         doc.removeEventListener('keypress', this.escListener);
     };
 
-    Litebox.prototype.sizeWrapper = function() {
+    Lightestbox.prototype.sizeWrapper = function() {
         var wrapper = this.wrapper();
         wrapper.style.width = window.innerWidth + 'px';
         wrapper.style.height = window.innerHeight + 'px';
     };
 
     /* elements created:
-        <div class="litebox-wrapper">
-          <div class="litebox-loading"><div>Loading</div></div>
+        <div class="ltbx-wrapper" id="ltbx-wrapper">
+          <div class="ltbx-loading"><div>Loading</div></div>
           <figure>
             <img src="{ a.href }" />
             <figcaption>{ a.title }</figcaption>
           </figure>
         </div>
     */
-    Litebox.prototype.create = function() {
+    Lightestbox.prototype.create = function() {
         this._wrapper = doc.createElement("div");
         this._wrapper.className = this.options.prefix + '-wrapper';
+        this._wrapper.id = this.options.prefix + '-wrapper';
         this.sizeWrapper();
 
         bind.call(this, this._wrapper, 'click', this.hide);
@@ -165,7 +166,7 @@
         return this._wrapper;
     };
 
-    Litebox.prototype.add = function(element) {
+    Lightestbox.prototype.add = function(element) {
         try {
             bind.call(this, element, 'click', this.show);    
         } catch (e) {
@@ -175,5 +176,5 @@
         return element;
     };
 
-    return Litebox;
+    return Lightestbox;
 });

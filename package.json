@@ -1,11 +1,11 @@
 {
-  "name": "litebox",
-  "version": "0.2.1",
+  "name": "lightestbox",
+  "version": "0.3.0",
   "description": "Dependency-free lightboxes",
-  "main": "./litebox.js",
+  "main": "./lightestbox.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fitnr/litebox"
+    "url": "https://github.com/fitnr/lightestbox"
   },
   "keywords": [
     "ender",
@@ -15,9 +15,9 @@
   "author": "Neil Freeman <contact@fakeisthenewreal.org>",
   "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/fitnr/litebox/issues"
+    "url": "https://github.com/fitnr/lightestbox/issues"
   },
-  "homepage": "https://github.com/fitnr/litebox",
+  "homepage": "https://github.com/fitnr/lightestbox",
   "ender": "./lib/ender.js",
   "devDependencies": {
     "clean-css": "^3.0.7",

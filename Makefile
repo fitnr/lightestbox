@@ -1,4 +1,4 @@
-main = litebox
+main = lightestbox
 
 .PHONY: all
 all: $(main).min.js $(main).min.css $(main).jquery.min.js $(main).zepto.min.js
