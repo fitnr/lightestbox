@@ -103,7 +103,7 @@
         }
 
         // create image
-        var img = doc.createElement('img');
+        var img = figure.getElementsByTagName('img').item(0) || doc.createElement('img');
 
         bind.call(this, img, 'load', this.sizeFigure);
         bind.call(this, img, 'load', function() {
