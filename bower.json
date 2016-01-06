@@ -1,0 +1,30 @@
+{
+  "name": "lightestbox",
+  "main": [
+    "lightestbox.js",
+    "css/lightestbox.css"
+  ],
+  "homepage": "https://github.com/fitnr/lightestbox",
+  "authors": [
+    "Neil Freeman <contact@fakeisthenewreal.org>"
+  ],
+  "description": "Dependency-free lightboxes",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "lightbox",
+    "photo",
+    "web",
+    "front-end"
+  ],
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
