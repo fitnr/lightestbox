@@ -72,7 +72,7 @@
         return this._figure || this.wrapper().getElementsByTagName('figure').item(0);
     };
 
-    // Preloads images. Pleaces new image in lightestbox then centers and displays.
+    // Preloads images. Places new image in lightestbox then centers and displays.
     Lightestbox.prototype.show = function(elem, event) {
         // do nothing if not img url not found
         var src = elem.href || elem.dataset.img || false;
@@ -134,8 +134,8 @@
         <div class="ltbx-wrapper" id="ltbx-wrapper">
           <div class="ltbx-loading"><div>Loading</div></div>
           <figure>
-            <img src="{ a.href }" />
-            <figcaption>{ a.title }</figcaption>
+            <img src="{ href }" />
+            <figcaption>{ title }</figcaption>
           </figure>
         </div>
     */
