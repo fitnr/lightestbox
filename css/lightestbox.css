@@ -1,3 +1,9 @@
+/*!
+    Lightestbox - dependency free lightboxes
+    http://github.com/fitnr/lightestbox
+    Copyright (C) 2015-6 Neil Freeman
+    @license GPL v3
+*/
 .ltbx-wrapper {
   background-color: rgba(0, 0, 0, 0.66);
   z-index: 100;

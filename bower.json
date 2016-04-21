@@ -19,6 +19,10 @@
     "web",
     "front-end"
   ],
+  "main": [
+    "dist/lightestbox.bundle.min.js",
+    "dist/lightestbox.min.css"
+  ],
   "license": "GPLv3",
   "ignore": [
     "**/.*",
