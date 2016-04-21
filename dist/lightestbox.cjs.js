@@ -1,3 +1,5 @@
+'use strict';
+
 /*!
     Lightestbox - dependency free lightboxes
     http://github.com/fitnr/lightestbox
@@ -6,7 +8,7 @@
 */
 var doc = window.document;
 
-export default function (element, opts) {
+function lightestbox (element, opts) {
     var defaults = {
         prefix: 'ltbx',
         maxWidth: Infinity,
@@ -141,3 +143,5 @@ Lightestbox.prototype.createWrapper = function() {
 
     return wrapper;
 };
+
+module.exports = lightestbox;

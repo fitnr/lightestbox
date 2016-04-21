@@ -2,7 +2,8 @@
   "name": "lightestbox",
   "version": "0.3.2",
   "description": "Dependency-free lightboxes",
-  "main": "./lightestbox.js",
+  "esnext:main": "./lightestbox.js",
+  "main": "dist/lightestbox.cjs.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/fitnr/lightestbox"
@@ -17,6 +18,9 @@
     "url": "https://github.com/fitnr/lightestbox/issues"
   },
   "homepage": "https://github.com/fitnr/lightestbox",
+  "scripts": {
+    "prepublish": "make"
+  },
   "devDependencies": {
     "clean-css": "^3.4.7",
     "uglify-js": "^2.6.2"
