@@ -46,8 +46,6 @@ $(document).ready(function(){
 
 Note that you don't have to include `lightestbox.min.js` if you're using the jQuery or Zepto modules. You will need the CSS, though.
 
-Run `ender add lightestbox` and you can do the same thing (assuming you have a selection engine running).
-
 ## Captions
 
 Want your image to have a caption? Add a `title` attribute to your link, and that text will be your caption. Don't like the way the caption looks? Write some CSS - the selector is `.lightestbox-wrapper figcaption`.
