@@ -23,10 +23,12 @@ Let's say we have this html:
 
 Once Lightestbox and the DOM are loaded, we can run:
 
-````js
-var L = new lightestbox(document.getElementById('foo'));
-L.add(document.getElementById('bar'));
-L.add(document.getElementById('baz')); // a loop would work, too
+````javascript
+var elements = document.getElementsByClassName('lightbox');
+
+var L = new lightestbox(elements);
+var more_elements = document.getElementsByClassName('other-elements')
+L.add(more_elements);
 ````
 
 Note that we're not limited to `<a>` tags. Setting a `data-img` attribute will let Lightestbox work nicely with most elements.
@@ -39,12 +41,14 @@ But wait, you probably don't want to deal with all that getElementById junk. If 
 <link rel="stylesheet" href="lightestbox.jquery.min.js">
 <script>
 $(document).ready(function(){
-    $('.boxy').lightestbox();    
+    $('.boxy').lightestbox();
 });
 </script>
 ````
 
 Note that you don't have to include `lightestbox.min.js` if you're using the jQuery or Zepto modules. You will need the CSS, though.
+
+See the `examples` directory for examples using vanilla JS, jQuery and Zepto.
 
 ## Captions
 

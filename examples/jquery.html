@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>lightestbox example</title>
+    <link rel="stylesheet" href="../css/lightestbox.css">
+    <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="../dist/lightestbox.jquery.min.js"></script>
+    <style>
+        img {
+            padding: 1em;
+        }
+    </style>
+</head>
+<body>
+    <img id="foo" href="http://placekitten.com/200/300" src="http://placekitten.com/200/300" />
+    <img id="bar" data-img="http://placekitten.com/300/305" src="http://placekitten.com/300/305" />
+    <img id="baz" href="http://placekitten.com/205/275" src="http://placekitten.com/205/275" />
+
+<script>
+$(document).ready(function(){
+    $('img').lightestbox();
+});
+</script>
+</body>
+</html>
