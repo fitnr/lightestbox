@@ -33,9 +33,6 @@ var Lightestbox = (function () {
         });
 
         this._wrapper.addEventListener('click', self.hide.bind(self));
-        window.addEventListener('resize', function() {
-            self.sizeWrapper(self._wrapper);
-        });
 
         return self;
     }
@@ -43,9 +40,9 @@ var Lightestbox = (function () {
     Lightestbox.prototype.sizeFigure = function(img) {
         var w = img.width,
             h = img.height,
-            max = Math.min(this.options.maxWidth, this._wrapper.style.width.replace('px', '')),
+            max = Math.min(this.options.maxWidth, window.innerWidth),
             figure = this.figure();
-        figure.style.width = ((w < max) ? w : max) + 'px';
+        figure.style.width = Math.min(w, max) + 'px';
         figure.style.height = ((w < max) ? h : max / w * h) + 'px';
     };
 
@@ -102,11 +99,6 @@ var Lightestbox = (function () {
         figure.removeChild(figure.getElementsByTagName('img').item(0));
     };
 
-    Lightestbox.prototype.sizeWrapper = function(wrapper) {
-        wrapper.style.width = window.innerWidth + 'px';
-        wrapper.style.height = window.innerHeight + 'px';
-    };
-
     /* elements created:
         <div class="ltbx-wrapper" id="ltbx-wrapper">
           <div class="ltbx-loading"><div>Loading</div></div>
@@ -125,7 +117,6 @@ var Lightestbox = (function () {
 
         wrapper.className = prefix + '-wrapper';
         wrapper.id = prefix + '-wrapper';
-        this.sizeWrapper(wrapper);
         
         loading.className = prefix + '-loading';
         wrapper.appendChild(loading);
