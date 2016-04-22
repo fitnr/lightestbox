@@ -4,6 +4,7 @@
 #    @license GPL v3
 
 main = lightestbox
+UGLIFYFLAGS = -c --screw-ie8 --comments
 
 .PHONY: all
 all: dist/$(main).cjs.js \
@@ -14,16 +15,16 @@ all: dist/$(main).cjs.js \
 	dist/$(main).bundle.min.js
 
 dist/$(main).bundle.min.js: dist/$(main).bundle.js
-	node_modules/.bin/uglifyjs $< -c --screw-ie8 --comments > $@
+	node_modules/.bin/uglifyjs $< $(UGLIFYFLAGS) > $@
 
 dist/$(main).bundle.js: $(main).js | dist
-	rollup -i $< -f iife -n $(main) > $@
+	rollup -i $< -f iife -n Lightestbox > $@
 
 dist/$(main).cjs.js: $(main).js | dist
-	rollup -i $< -f cjs -n $(main) > $@
+	rollup -i $< -f cjs -n Lightestbox > $@
 
 dist/$(main).%.min.js: lib/%.js $(main).js | dist
-	rollup -i $< -f iife -n $(main) | node_modules/.bin/uglifyjs -c --screw-ie8 --comments > $@
+	rollup -i $< -f iife -n Lightestbox | node_modules/.bin/uglifyjs $(UGLIFYFLAGS) > $@
 
 dist/%.min.css: css/%.css | dist
 	node_modules/.bin/cleancss $^ > $@
