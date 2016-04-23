@@ -2,7 +2,7 @@
   "name": "lightestbox",
   "version": "0.4.0",
   "description": "Dependency-free lightboxes",
-  "esnext:main": "./lightestbox.js",
+  "jsnext:main": "./lightestbox.js",
   "main": "dist/lightestbox.cjs.js",
   "repository": {
     "type": "git",
